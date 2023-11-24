@@ -10,6 +10,7 @@ namespace OOP_domaci
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
