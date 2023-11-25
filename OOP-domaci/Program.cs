@@ -10,10 +10,10 @@ namespace OOP_domaci
     {
         static void Main(string[] args)
         {
-            int Input()
+            int InputInt()
             {
                 bool inputVerification = true;
-                int input = 0;
+                int input;
                 do
                 {
                     if (!inputVerification)
@@ -43,7 +43,27 @@ namespace OOP_domaci
             Console.WriteLine("6 - Ispis svih poziva");
             Console.WriteLine("7 - Izlaz iz aplikacije");
 
-            int mainInput = Input();
+            int mainInput = InputInt();
+
+            Console.Clear();
+
+            switch (mainInput)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
         }
     }
 }
