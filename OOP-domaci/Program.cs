@@ -50,6 +50,13 @@ namespace OOP_domaci
             switch (mainInput)
             {
                 case 1:
+                    foreach (var item in myDictionary)
+                    {
+                        Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber} - {item.Key.Preference}");
+                        foreach (var item2 in item.Value)
+                            Console.WriteLine($"\t{item2.CallingTime} - {item2.Status}");
+                    }
+                    Console.ReadKey();
                     break;
                 case 2:
                     break;
