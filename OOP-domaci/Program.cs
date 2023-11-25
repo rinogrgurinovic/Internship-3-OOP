@@ -28,8 +28,8 @@ namespace OOP_domaci
             var myDictionary = new Dictionary<Contact, List<Call>>()
             {
                 {new Contact("Marin Marinovic", "0998765432", "blocked"), new List<Call>() {new Call(new DateTime(2022, 12, 03, 09, 43, 55), "missed"),
-                                                                                          new Call(new DateTime(2023, 03, 15, 14, 32, 18), "ended") } },
-                {new Contact("Ivan Ivanovic", "0912345678", "favorite"), new List<Call>() {new Call(new DateTime(2023, 11, 20, 18, 13, 46), "missed"),
+                                                                                          new Call(new DateTime(2023, 03, 15, 14, 32, 18), "missed") } },
+                {new Contact("Ivan Ivanovic", "0912345678", "favorite"), new List<Call>() {new Call(new DateTime(2023, 11, 20, 18, 13, 46), "ended"),
                                                                                          new Call(new DateTime(2023, 11, 25, 12, 30, 23), "ongoing")} },
                 {new Contact("Lara Laric", "0985342187", "normal"), new List<Call>() {new Call(new DateTime(2021, 05, 19, 23, 54, 03), "ended"),
                                                                                     new Call(new DateTime(2021, 07, 01, 22, 03, 19), "missed")} },
@@ -51,11 +51,7 @@ namespace OOP_domaci
             {
                 case 1:
                     foreach (var item in myDictionary)
-                    {
                         Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber} - {item.Key.Preference}");
-                        foreach (var item2 in item.Value)
-                            Console.WriteLine($"\t{item2.CallingTime} - {item2.Status}");
-                    }
                     Console.ReadKey();
                     break;
                 case 2:
@@ -67,6 +63,13 @@ namespace OOP_domaci
                 case 5:
                     break;
                 case 6:
+                    foreach (var item in myDictionary)
+                    {
+                        Console.WriteLine(item.Key.NameAndSurname);
+                        foreach (var item2 in item.Value)
+                            Console.WriteLine($"\t{item2.CallingTime} - {item2.Status}");
+                    }
+                    Console.ReadKey();
                     break;
                 case 7:
                     break;
