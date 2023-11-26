@@ -66,6 +66,12 @@ namespace OOP_domaci
 
                 Console.Clear();
 
+                string nameAndSurname;
+                bool flag = true;
+                string confirmation;
+                Contact contact;
+                string phoneNumber = "";
+                string preference = "";
                 switch (mainInput)
                 {
                     case 1:
@@ -75,12 +81,9 @@ namespace OOP_domaci
                         Console.ReadKey();
                         break;
                     case 2:
-                        bool flag = true;
-
                         Console.WriteLine("Unesite ime i prezime novog kontakta:");
-                        string nameAndSurname = InputString();
+                        nameAndSurname = InputString();
 
-                        string phoneNumber;
                         do
                         {
                             Console.Clear();
@@ -92,10 +95,12 @@ namespace OOP_domaci
                             flag = true;
                             foreach (var item in myDictionary)
                                 if (phoneNumber == item.Key.PhoneNumber)
+                                {
                                     flag = false;
+                                    break;
+                                }
                         } while (!flag);
 
-                        string preference;
                         do
                         {
                             Console.Clear();
@@ -109,10 +114,64 @@ namespace OOP_domaci
                                 flag = false;
                         } while (!flag);
 
-                        var contact = new Contact(nameAndSurname, phoneNumber, preference);
+                        contact = new Contact(nameAndSurname, phoneNumber, preference);
                         myDictionary.Add(contact, new List<Call>());
                         break;
                     case 3:
+                        do
+                        {
+                            Console.Clear();
+                            foreach (var item in myDictionary)
+                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber}");
+
+                            if (!flag)
+                                Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
+                            Console.WriteLine("Upisite ime kontakta kojeg zelite izbrisati:");
+                            nameAndSurname = InputString();
+
+                            flag = false;
+                            foreach (var item in myDictionary)
+                                if (nameAndSurname == item.Key.NameAndSurname)
+                                {
+                                    flag = true;
+                                    break;
+                                }
+                        } while (!flag);
+
+                        do
+                        {
+                            Console.Clear();
+                            if (!flag)
+                                Console.WriteLine("Krivi unos, pokusajte ponovno:");
+                            Console.WriteLine("Jeste li sigurni da zelite izbrisati ovaj kontakt (da/ne):");
+                            confirmation = InputString();
+
+                            flag = true;
+                            if (confirmation == "da")
+                            {
+                                foreach (var item in myDictionary)
+                                    if (nameAndSurname == item.Key.NameAndSurname)
+                                    {
+                                        phoneNumber = item.Key.PhoneNumber;
+                                        preference = item.Key.Preference;
+                                        break;
+                                    }
+
+                                contact = new Contact(nameAndSurname, phoneNumber, preference);
+                                myDictionary.Remove(contact);
+
+                                Console.WriteLine("Uspjesno izbrisan kontakt, pritisnite tipku za povratak na izbornik");
+                                Console.ReadKey();
+                            }
+                            else if (confirmation == "ne")
+                            {
+                                Console.WriteLine("Akcija ponistena, pritisnite tipku za povratak na izbornik");
+                                Console.ReadKey();
+                                break;
+                            }
+                            else
+                                flag = false;
+                        } while (!flag);
                         break;
                     case 4:
                         break;
