@@ -25,13 +25,23 @@ namespace OOP_domaci
                 Console.WriteLine("7 - Izlaz iz aplikacije");
             }
 
-            int InputInt(bool InputVerification)
+            void Submenu()
+            {
+                Console.WriteLine("1 - Ispis svih poziva");
+                Console.WriteLine("2 - Kreiranje novog poziva");
+                Console.WriteLine("3 - Povratak na glavni izbornik");
+            }
+
+            int InputInt(bool InputVerification, string menu)
             {
                 int input;
                 do
                 {
                     Console.Clear();
-                    Menu();
+                    if (menu == "Menu")
+                        Menu();
+                    else
+                        Submenu();
                     if (!InputVerification)
                         Console.WriteLine("Krivi unos, pokusajte ponovno:");
                     InputVerification = int.TryParse(Console.ReadLine(), out input);
@@ -62,7 +72,7 @@ namespace OOP_domaci
 
             do
             {
-                int mainInput = InputInt(inputVerification);
+                int mainInput = InputInt(inputVerification, "Menu");
 
                 Console.Clear();
 
@@ -174,6 +184,76 @@ namespace OOP_domaci
                         } while (!flag);
                         break;
                     case 4:
+                        do
+                        {
+                            Console.Clear();
+                            foreach (var item in myDictionary)
+                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber}");
+
+                            if (!flag)
+                                Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
+                            Console.WriteLine("Upisite ime kontakta kojemu zelite promijeniti preferencu:");
+                            nameAndSurname = InputString();
+
+                            flag = false;
+                            foreach (var item in myDictionary)
+                                if (nameAndSurname == item.Key.NameAndSurname)
+                                {
+                                    flag = true;
+                                    break;
+                                }
+                        } while (!flag);
+
+                        string newPreference;
+                        do
+                        {
+                            Console.Clear();
+                            if (!flag)
+                                Console.WriteLine("Nepostojeca preferenca, pokusajte ponovno:");
+                            Console.WriteLine("Unesite novu preferencu ovog kontakta (blokiran, favorit ili normalan):");
+                            newPreference = InputString();
+
+                            flag = true;
+                            if (newPreference != "blokiran" && newPreference != "favorit" && newPreference != "normalan")
+                                flag = false;
+                        } while (!flag);
+
+                        do
+                        {
+                            Console.Clear();
+                            if (!flag)
+                                Console.WriteLine("Krivi unos, pokusajte ponovno:");
+                            Console.WriteLine("Jeste li sigurni da zelite promijeniti ovaj kontakt (da/ne):");
+                            confirmation = InputString();
+
+                            flag = true;
+                            if (confirmation == "da")
+                            {
+                                foreach (var item in myDictionary)
+                                    if (nameAndSurname == item.Key.NameAndSurname)
+                                    {
+                                        phoneNumber = item.Key.PhoneNumber;
+                                        preference = item.Key.Preference;
+                                        break;
+                                    }
+
+                                contact = new Contact(nameAndSurname, phoneNumber, preference);
+                                Contact newContact = new Contact(nameAndSurname, phoneNumber, newPreference);
+                                myDictionary.Remove(contact);
+                                myDictionary.Add(newContact, new List<Call>());
+
+                                Console.WriteLine("Uspjesno promijenjena preferenca kontakta, pritisnite tipku za povratak na izbornik");
+                                Console.ReadKey();
+                            }
+                            else if (confirmation == "ne")
+                            {
+                                Console.WriteLine("Akcija ponistena, pritisnite tipku za povratak na izbornik");
+                                Console.ReadKey();
+                                break;
+                            }
+                            else
+                                flag = false;
+                        } while (!flag);
                         break;
                     case 5:
                         break;
