@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,16 @@ namespace OOP_domaci
                 return input;
             }
 
+            string InputString()
+            {
+                string input;
+                do
+                {
+                    input = Console.ReadLine();
+                } while (input.Trim() == "");
+                return input;
+            }
+
             var myDictionary = new Dictionary<Contact, List<Call>>()
             {
                 {new Contact("Marin Marinovic", "0998765432", "blokiran"), new List<Call>() {new Call(new DateTime(2022, 12, 03, 09, 43, 55), "propusten"),
@@ -64,6 +75,42 @@ namespace OOP_domaci
                         Console.ReadKey();
                         break;
                     case 2:
+                        bool flag = true;
+
+                        Console.WriteLine("Unesite ime i prezime novog kontakta:");
+                        string nameAndSurname = InputString();
+
+                        string phoneNumber;
+                        do
+                        {
+                            Console.Clear();
+                            if (!flag)
+                                Console.WriteLine("Taj je broj vec u imeniku, pokusajte ponovno:");
+                            Console.WriteLine("Unesite broj novog kontakta:");
+                            phoneNumber = InputString();
+
+                            flag = true;
+                            foreach (var item in myDictionary)
+                                if (phoneNumber == item.Key.PhoneNumber)
+                                    flag = false;
+                        } while (!flag);
+
+                        string preference;
+                        do
+                        {
+                            Console.Clear();
+                            if (!flag)
+                                Console.WriteLine("Nepostojeca preferenca, pokusajte ponovno:");
+                            Console.WriteLine("Unesite preferencu novog kontakta (blokiran, favorit ili normalan):");
+                            preference = InputString();
+
+                            flag = true;
+                            if (preference != "blokiran" && preference != "favorit" && preference != "normalan")
+                                flag = false;
+                        } while (!flag);
+
+                        var contact = new Contact(nameAndSurname, phoneNumber, preference);
+                        myDictionary.Add(contact, new List<Call>());
                         break;
                     case 3:
                         break;
@@ -74,6 +121,8 @@ namespace OOP_domaci
                     case 6:
                         foreach (var item in myDictionary)
                         {
+                            if (!item.Value.Any())
+                                continue;
                             Console.WriteLine(item.Key.NameAndSurname);
                             foreach (var item2 in item.Value)
                                 Console.WriteLine($"\t{item2.CallingTime} - {item2.Status}");
