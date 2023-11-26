@@ -10,70 +10,85 @@ namespace OOP_domaci
     {
         static void Main(string[] args)
         {
-            int InputInt()
+            bool exit = false;
+            bool inputVerification = true;
+
+            void Menu()
             {
-                bool inputVerification = true;
+                Console.WriteLine("1 - Ispis svih kontakata");
+                Console.WriteLine("2 - Dodavanje novih kontakata u imenik");
+                Console.WriteLine("3 - Brisanje kontakta iz imenika");
+                Console.WriteLine("4 - Editiranje preference kontakta");
+                Console.WriteLine("5 - Upravljanje kontaktom");
+                Console.WriteLine("6 - Ispis svih poziva");
+                Console.WriteLine("7 - Izlaz iz aplikacije");
+            }
+
+            int InputInt(bool InputVerification)
+            {
                 int input;
                 do
                 {
-                    if (!inputVerification)
+                    Console.Clear();
+                    Menu();
+                    if (!InputVerification)
                         Console.WriteLine("Krivi unos, pokusajte ponovno:");
-                    inputVerification = int.TryParse(Console.ReadLine(), out input);
-                    if (input > 7 || input < 1)
-                        inputVerification = false;
-                } while(!inputVerification);
+                    InputVerification = int.TryParse(Console.ReadLine(), out input);
+                } while(!InputVerification);
+                inputVerification = InputVerification;
                 return input;
             }
 
             var myDictionary = new Dictionary<Contact, List<Call>>()
             {
-                {new Contact("Marin Marinovic", "0998765432", "blocked"), new List<Call>() {new Call(new DateTime(2022, 12, 03, 09, 43, 55), "missed"),
-                                                                                          new Call(new DateTime(2023, 03, 15, 14, 32, 18), "missed") } },
-                {new Contact("Ivan Ivanovic", "0912345678", "favorite"), new List<Call>() {new Call(new DateTime(2023, 11, 20, 18, 13, 46), "ended"),
-                                                                                         new Call(new DateTime(2023, 11, 25, 12, 30, 23), "ongoing")} },
-                {new Contact("Lara Laric", "0985342187", "normal"), new List<Call>() {new Call(new DateTime(2021, 05, 19, 23, 54, 03), "ended"),
-                                                                                    new Call(new DateTime(2021, 07, 01, 22, 03, 19), "missed")} },
+                {new Contact("Marin Marinovic", "0998765432", "blokiran"), new List<Call>() {new Call(new DateTime(2022, 12, 03, 09, 43, 55), "propusten"),
+                                                                                          new Call(new DateTime(2023, 03, 15, 14, 32, 18), "propusten") } },
+                {new Contact("Ivan Ivanovic", "0912345678", "favorit"), new List<Call>() {new Call(new DateTime(2023, 11, 20, 18, 13, 46), "zavrsen"),
+                                                                                         new Call(new DateTime(2023, 11, 25, 12, 30, 23), "u tijeku")} },
+                {new Contact("Lara Laric", "0985342187", "normalan"), new List<Call>() {new Call(new DateTime(2021, 05, 19, 23, 54, 03), "zavrsen"),
+                                                                                    new Call(new DateTime(2021, 07, 01, 22, 03, 19), "propusten")} },
             };
 
-            Console.WriteLine("1 - Ispis svih kontakata");
-            Console.WriteLine("2 - Dodavanje novih kontakata u imenik");
-            Console.WriteLine("3 - Brisanje kontakta iz imenika");
-            Console.WriteLine("4 - Editiranje preference kontakta");
-            Console.WriteLine("5 - Upravljanje kontaktom");
-            Console.WriteLine("6 - Ispis svih poziva");
-            Console.WriteLine("7 - Izlaz iz aplikacije");
-
-            int mainInput = InputInt();
-
-            Console.Clear();
-
-            switch (mainInput)
+            do
             {
-                case 1:
-                    foreach (var item in myDictionary)
-                        Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber} - {item.Key.Preference}");
-                    Console.ReadKey();
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    foreach (var item in myDictionary)
-                    {
-                        Console.WriteLine(item.Key.NameAndSurname);
-                        foreach (var item2 in item.Value)
-                            Console.WriteLine($"\t{item2.CallingTime} - {item2.Status}");
-                    }
-                    Console.ReadKey();
-                    break;
-                case 7:
-                    break;
-            }
+                int mainInput = InputInt(inputVerification);
+
+                Console.Clear();
+
+                switch (mainInput)
+                {
+                    case 1:
+                        foreach (var item in myDictionary)
+                            Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber} - {item.Key.Preference}");
+                        Console.WriteLine("Pritisnite tipku za povratak na izbornik");
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        foreach (var item in myDictionary)
+                        {
+                            Console.WriteLine(item.Key.NameAndSurname);
+                            foreach (var item2 in item.Value)
+                                Console.WriteLine($"\t{item2.CallingTime} - {item2.Status}");
+                        }
+                        Console.WriteLine("Pritisnite tipku za povratak na izbornik");
+                        Console.ReadKey();
+                        break;
+                    case 7:
+                        exit = true;
+                        break;
+                    default:
+                        inputVerification = false;
+                        break;
+                }
+            } while (!exit);
         }
     }
 }
