@@ -256,6 +256,27 @@ namespace OOP_domaci
                         } while (!flag);
                         break;
                     case 5:
+                        do
+                        {
+                            int subInput = InputInt(inputVerification, "Submenu");
+
+                            Console.Clear();
+
+                            switch (subInput)
+                            {
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                                case 3:
+                                    exit = true;
+                                    break;
+                                default:
+                                    inputVerification = false;
+                                    break;
+                            }
+                        } while (!exit);
+                        exit = false;
                         break;
                     case 6:
                         foreach (var item in myDictionary)
