@@ -253,12 +253,13 @@ namespace OOP_domaci
                                         preference = item.Key.Preference;
                                         break;
                                     }
-                                /*
-                                contact = new Contact(nameAndSurname, phoneNumber, preference);
-                                Contact newContact = new Contact(nameAndSurname, phoneNumber, newPreference);
-                                myDictionary.Remove(contact);
-                                myDictionary.Add(newContact, new List<Call>());
-                                */
+                                
+                                Contact contactToRemove = myDictionary.Keys.FirstOrDefault(c => c.NameAndSurname == nameAndSurname);
+                                myDictionary.Remove(contactToRemove);
+
+                                Contact contactToChange = new Contact(nameAndSurname, phoneNumber, newPreference);
+                                myDictionary.Add(contactToChange, new List<Call>());
+
                                 Console.WriteLine("Uspjesno promijenjena preferenca kontakta, pritisnite tipku za povratak na izbornik");
                                 Console.ReadKey();
                             }
