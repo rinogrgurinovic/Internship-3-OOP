@@ -89,7 +89,6 @@ namespace OOP_domaci
                 string preference = "";
                 bool flag = true;
                 string confirmation;
-                Contact contact/* = new Contact(nameAndSurname, phoneNumber, preference)*/;
                 switch (mainInput)
                 {
                     case 1:
@@ -146,8 +145,8 @@ namespace OOP_domaci
                                 flag = false;
                         } while (!flag);
 
-                        contact = new Contact(nameAndSurname, phoneNumber, preference);
-                        myDictionary.Add(contact, new List<Call>());
+                        Contact newContact = new Contact(nameAndSurname, phoneNumber, preference);
+                        myDictionary.Add(newContact, new List<Call>());
 
                         Console.WriteLine("Uspjesno dodan kontakt, pritisnite tipku za povratak na izbornik");
                         Console.ReadKey();
@@ -157,7 +156,7 @@ namespace OOP_domaci
                         {
                             Console.Clear();
                             foreach (var item in myDictionary)
-                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber}");
+                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber} - {item.Key.Preference}");
 
                             if (!flag)
                                 Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
@@ -205,7 +204,7 @@ namespace OOP_domaci
                         {
                             Console.Clear();
                             foreach (var item in myDictionary)
-                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber}");
+                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber} - {item.Key.Preference}");
 
                             if (!flag)
                                 Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
@@ -278,7 +277,7 @@ namespace OOP_domaci
                         {
                             Console.Clear();
                             foreach (var item in myDictionary)
-                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber}");
+                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber} - {item.Key.Preference}");
 
                             if (!flag)
                                 Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
@@ -306,11 +305,11 @@ namespace OOP_domaci
                                     foreach (var item in myDictionary)
                                         if (item.Key.NameAndSurname == nameAndSurname)
                                         {
-                                            foreach (var item2 in item.Value)
+                                            foreach (var item2 in item.Value.OrderByDescending(c => c.CallingTime))
                                                 Console.WriteLine($"{item2.CallingTime} - {item2.Status}");
                                             break;
                                         }
-                                            
+                                      
                                     Console.WriteLine("Pritisnite tipku za povratak na izbornik");
                                     Console.ReadKey();
                                     break;
