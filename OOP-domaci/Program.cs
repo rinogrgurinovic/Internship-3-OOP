@@ -91,8 +91,22 @@ namespace OOP_domaci
                         Console.ReadKey();
                         break;
                     case 2:
-                        Console.WriteLine("Unesite ime i prezime novog kontakta:");
-                        nameAndSurname = InputString();
+                        do
+                        {
+                            Console.Clear();
+                            if (!flag)
+                                Console.WriteLine("To je ime vec u imeniku, pokusajte ponovno:");
+                            Console.WriteLine("Unesite ime i prezime novog kontakta:");
+                            nameAndSurname = InputString();
+
+                            flag = true;
+                            foreach (var item in myDictionary)
+                                if (nameAndSurname == item.Key.NameAndSurname)
+                                {
+                                    flag = false;
+                                    break;
+                                }
+                        } while (!flag);
 
                         do
                         {
@@ -126,6 +140,9 @@ namespace OOP_domaci
 
                         contact = new Contact(nameAndSurname, phoneNumber, preference);
                         myDictionary.Add(contact, new List<Call>());
+
+                        Console.WriteLine("Uspjesno dodan kontakt, pritisnite tipku za povratak na izbornik");
+                        Console.ReadKey();
                         break;
                     case 3:
                         do
@@ -258,6 +275,26 @@ namespace OOP_domaci
                     case 5:
                         do
                         {
+                            Console.Clear();
+                            foreach (var item in myDictionary)
+                                Console.WriteLine($"{item.Key.NameAndSurname} - {item.Key.PhoneNumber}");
+
+                            if (!flag)
+                                Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
+                            Console.WriteLine("Upisite ime kontakta kojim zelite upravljati:");
+                            nameAndSurname = InputString();
+
+                            flag = false;
+                            foreach (var item in myDictionary)
+                                if (nameAndSurname == item.Key.NameAndSurname)
+                                {
+                                    flag = true;
+                                    break;
+                                }
+                        } while (!flag);
+
+                        do
+                        {
                             int subInput = InputInt(inputVerification, "Submenu");
 
                             Console.Clear();
@@ -265,6 +302,16 @@ namespace OOP_domaci
                             switch (subInput)
                             {
                                 case 1:
+                                    foreach (var item in myDictionary)
+                                        if (item.Key.NameAndSurname == nameAndSurname)
+                                        {
+                                            foreach (var item2 in item.Value)
+                                                Console.WriteLine($"{item2.CallingTime} - {item2.Status}");
+                                            break;
+                                        }
+                                            
+                                    Console.WriteLine("Pritisnite tipku za povratak na izbornik");
+                                    Console.ReadKey();
                                     break;
                                 case 2:
                                     break;
