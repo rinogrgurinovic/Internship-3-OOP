@@ -60,14 +60,22 @@ namespace OOP_domaci
                 return input;
             }
 
+            Contact contact1 = new Contact("Marin Marinovic", "0998765432", "blokiran");
+            Contact contact2 = new Contact("Ivan Ivanovic", "0912345678", "favorit");
+            Contact contact3 = new Contact("Lara Laric", "0985342187", "normalan");
+
+            Call call1 = new Call(new DateTime(2022, 12, 03, 09, 43, 55), "propusten");
+            Call call2 = new Call(new DateTime(2023, 03, 15, 14, 32, 18), "propusten");
+            Call call3 = new Call(new DateTime(2023, 11, 20, 18, 13, 46), "zavrsen");
+            Call call4 = new Call(new DateTime(2023, 11, 25, 12, 30, 23), "u tijeku");
+            Call call5 = new Call(new DateTime(2021, 05, 19, 23, 54, 03), "zavrsen");
+            Call call6 = new Call(new DateTime(2021, 07, 01, 22, 03, 19), "propusten");
+
             var myDictionary = new Dictionary<Contact, List<Call>>()
             {
-                {new Contact("Marin Marinovic", "0998765432", "blokiran"), new List<Call>() {new Call(new DateTime(2022, 12, 03, 09, 43, 55), "propusten"),
-                                                                                          new Call(new DateTime(2023, 03, 15, 14, 32, 18), "propusten") } },
-                {new Contact("Ivan Ivanovic", "0912345678", "favorit"), new List<Call>() {new Call(new DateTime(2023, 11, 20, 18, 13, 46), "zavrsen"),
-                                                                                         new Call(new DateTime(2023, 11, 25, 12, 30, 23), "u tijeku")} },
-                {new Contact("Lara Laric", "0985342187", "normalan"), new List<Call>() {new Call(new DateTime(2021, 05, 19, 23, 54, 03), "zavrsen"),
-                                                                                    new Call(new DateTime(2021, 07, 01, 22, 03, 19), "propusten")} },
+                {contact1, new List<Call>() {call1, call2 } },
+                {contact2, new List<Call>() {call3, call4 } },
+                {contact3, new List<Call>() {call5, call6 } },
             };
 
             do
@@ -76,12 +84,12 @@ namespace OOP_domaci
 
                 Console.Clear();
 
-                string nameAndSurname;
-                bool flag = true;
-                string confirmation;
-                Contact contact;
+                string nameAndSurname = "";
                 string phoneNumber = "";
                 string preference = "";
+                bool flag = true;
+                string confirmation;
+                Contact contact/* = new Contact(nameAndSurname, phoneNumber, preference)*/;
                 switch (mainInput)
                 {
                     case 1:
@@ -176,16 +184,8 @@ namespace OOP_domaci
                             flag = true;
                             if (confirmation == "da")
                             {
-                                foreach (var item in myDictionary)
-                                    if (nameAndSurname == item.Key.NameAndSurname)
-                                    {
-                                        phoneNumber = item.Key.PhoneNumber;
-                                        preference = item.Key.Preference;
-                                        break;
-                                    }
-
-                                contact = new Contact(nameAndSurname, phoneNumber, preference);
-                                myDictionary.Remove(contact);
+                                Contact contactToDelete = myDictionary.Keys.FirstOrDefault(c => c.NameAndSurname == nameAndSurname);
+                                myDictionary.Remove(contactToDelete);
 
                                 Console.WriteLine("Uspjesno izbrisan kontakt, pritisnite tipku za povratak na izbornik");
                                 Console.ReadKey();
@@ -253,12 +253,12 @@ namespace OOP_domaci
                                         preference = item.Key.Preference;
                                         break;
                                     }
-
+                                /*
                                 contact = new Contact(nameAndSurname, phoneNumber, preference);
                                 Contact newContact = new Contact(nameAndSurname, phoneNumber, newPreference);
                                 myDictionary.Remove(contact);
                                 myDictionary.Add(newContact, new List<Call>());
-
+                                */
                                 Console.WriteLine("Uspjesno promijenjena preferenca kontakta, pritisnite tipku za povratak na izbornik");
                                 Console.ReadKey();
                             }
