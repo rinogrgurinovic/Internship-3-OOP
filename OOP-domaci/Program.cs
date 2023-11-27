@@ -160,12 +160,12 @@ namespace OOP_domaci
 
                             if (!flag)
                                 Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
-                            Console.WriteLine("Upisite ime kontakta kojeg zelite izbrisati:");
-                            nameAndSurname = InputString();
+                            Console.WriteLine("Upisite broj kontakta kojeg zelite izbrisati:");
+                            phoneNumber = InputString();
 
                             flag = false;
                             foreach (var item in myDictionary)
-                                if (nameAndSurname == item.Key.NameAndSurname)
+                                if (phoneNumber == item.Key.PhoneNumber)
                                 {
                                     flag = true;
                                     break;
@@ -183,7 +183,7 @@ namespace OOP_domaci
                             flag = true;
                             if (confirmation == "da")
                             {
-                                Contact contactToDelete = myDictionary.Keys.FirstOrDefault(c => c.NameAndSurname == nameAndSurname);
+                                Contact contactToDelete = myDictionary.Keys.FirstOrDefault(c => c.PhoneNumber == phoneNumber);
                                 myDictionary.Remove(contactToDelete);
 
                                 Console.WriteLine("Uspjesno izbrisan kontakt, pritisnite tipku za povratak na izbornik");
@@ -208,12 +208,12 @@ namespace OOP_domaci
 
                             if (!flag)
                                 Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
-                            Console.WriteLine("Upisite ime kontakta kojemu zelite promijeniti preferencu:");
-                            nameAndSurname = InputString();
+                            Console.WriteLine("Upisite broj kontakta kojemu zelite promijeniti preferencu:");
+                            phoneNumber = InputString();
 
                             flag = false;
                             foreach (var item in myDictionary)
-                                if (nameAndSurname == item.Key.NameAndSurname)
+                                if (phoneNumber == item.Key.PhoneNumber)
                                 {
                                     flag = true;
                                     break;
@@ -246,18 +246,15 @@ namespace OOP_domaci
                             if (confirmation == "da")
                             {
                                 foreach (var item in myDictionary)
-                                    if (nameAndSurname == item.Key.NameAndSurname)
+                                    if (phoneNumber == item.Key.PhoneNumber)
                                     {
-                                        phoneNumber = item.Key.PhoneNumber;
+                                        nameAndSurname = item.Key.NameAndSurname;
                                         preference = item.Key.Preference;
                                         break;
                                     }
-                                
-                                Contact contactToRemove = myDictionary.Keys.FirstOrDefault(c => c.NameAndSurname == nameAndSurname);
-                                myDictionary.Remove(contactToRemove);
 
-                                Contact contactToChange = new Contact(nameAndSurname, phoneNumber, newPreference);
-                                myDictionary.Add(contactToChange, new List<Call>());
+                                Contact contactToChange = myDictionary.Keys.FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+                                contactToChange.Preference = newPreference;
 
                                 Console.WriteLine("Uspjesno promijenjena preferenca kontakta, pritisnite tipku za povratak na izbornik");
                                 Console.ReadKey();
@@ -281,12 +278,12 @@ namespace OOP_domaci
 
                             if (!flag)
                                 Console.WriteLine("Taj kontakt ne postoji, pokusajte ponovno:");
-                            Console.WriteLine("Upisite ime kontakta kojim zelite upravljati:");
-                            nameAndSurname = InputString();
+                            Console.WriteLine("Upisite broj kontakta kojim zelite upravljati:");
+                            phoneNumber = InputString();
 
                             flag = false;
                             foreach (var item in myDictionary)
-                                if (nameAndSurname == item.Key.NameAndSurname)
+                                if (phoneNumber == item.Key.PhoneNumber)
                                 {
                                     flag = true;
                                     break;
@@ -303,7 +300,7 @@ namespace OOP_domaci
                             {
                                 case 1:
                                     foreach (var item in myDictionary)
-                                        if (item.Key.NameAndSurname == nameAndSurname)
+                                        if (item.Key.PhoneNumber == phoneNumber)
                                         {
                                             foreach (var item2 in item.Value.OrderByDescending(c => c.CallingTime))
                                                 Console.WriteLine($"{item2.CallingTime} - {item2.Status}");
@@ -314,6 +311,7 @@ namespace OOP_domaci
                                     Console.ReadKey();
                                     break;
                                 case 2:
+
                                     break;
                                 case 3:
                                     exit = true;
